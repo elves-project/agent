@@ -1,0 +1,37 @@
+{
+        "asset": "localhost",
+        "ip": "127.0.0.1",
+        "port": 11101,
+        "heartbeat": {
+                "comment": "if this disabled,agent will not install app automatically",
+                "enabled": true,
+                "addr": "127.0.0.1",
+                "port": 11102,
+                "interval": 60,
+                "timeout": 5
+        },
+        "scheduler": {
+                "addr": "127.0.0.1",
+                "port": 10101,
+                "timeout": 5
+        },
+        "agentcron":{
+                "comment": "agent cron,detail cfg check cron.json",
+                "enabled": true
+        },
+        "http": {
+                "comment": "this is an agent dashbord , not include import info",
+                "enabled": true,
+                "listen": ":19880"
+        },
+        "appsdownloadaddr": "http://127.0.0.1/",
+        "apps": {
+                "apptest": "2.0"
+        },
+        "devmode": {
+                "comment": "dev mode will start a mini http api service for dev only and it only support 'rt' method ,you can define auth_id and auth_key otherwise it will generat randly",
+                "enabled": false,
+                "authid": "1",
+                "authkey": "123456789"
+        }
+}

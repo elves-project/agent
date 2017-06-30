@@ -1,0 +1,129 @@
+#!/bin/bash
+
+WORKSPACE=$(cd $(dirname $0)/; pwd)
+cd $WORKSPACE
+
+mkdir -p var
+
+module=agent
+app=elves-$module
+conf=cfg.json
+pidfile=var/app.pid
+
+function check_pid() {
+    if [ -f $pidfile ];then
+        pid=`cat $pidfile`
+        if [ -n $pid ]; then
+            running=`ps -p $pid|grep -v "PID TTY" |wc -l`
+            return $running
+        fi
+    fi
+    return 0
+}
+
+function start() {
+    check_pid
+    running=$?
+    if [ $running -gt 0 ];then
+        echo -n "$app now is running already, pid="
+        cat $pidfile
+        return 1
+    fi
+    cd $WORKSPACE/bin
+    nohup ./$app -r $WORKSPACE >/dev/null 2>&1 &
+    echo $! > ../$pidfile
+    echo "$app started..., pid=$!"
+}
+
+function stop() {
+    pid=`cat $pidfile`
+    kill $pid
+    echo "$app stoped..."
+}
+
+function restart() {
+    stop
+    sleep 1
+    start
+}
+
+function status() {
+    check_pid
+    running=$?
+    if [ $running -gt 0 ];then
+        echo started
+    else
+        echo stoped
+    fi
+}
+
+function tailf() {
+    tail -f $WORKSPACE/logs/*
+}
+
+function build() {
+    go build src/agent.go
+    if [ $? -ne 0 ]; then
+        exit $?
+    fi
+    mv $module ./bin/$app
+    ./bin/$app -v
+}
+
+function pack() {
+    build
+    version=`./bin/$app -v`
+    tar zcvf $app-linux-$version.tar.gz conf/ bin/elves-agent public/ control README.md --exclude conf/cfg.json
+}
+
+function install(){
+    echo "$WORKSPACE/control start #$app" >> /etc/rc.local
+    echo "$app install... (you can check /etc/rc.local)"
+}
+
+function uninstall(){
+    sed -i '/'"$app"'/d' /etc/rc.local
+    echo "$app uninstall... (you can check /etc/rc.local)"
+}
+
+function cleanapp() {
+    cd $WORKSPACE/bin
+    ./$app -clear
+}
+
+function version() {
+     cd $WORKSPACE/bin
+     ./$app -v
+ }
+
+function help() {
+    echo "$0 build|pack|install|uninstall|start|stop|restart|status|cleanapp|version|tail"
+}
+
+if [ "$1" == "" ]; then
+    help
+elif [ "$1" == "stop" ];then
+    stop
+elif [ "$1" == "start" ];then
+    start
+elif [ "$1" == "restart" ];then
+    restart
+elif [ "$1" == "status" ];then
+    status
+elif [ "$1" == "tail" ];then
+    tailf
+elif [ "$1" == "build" ];then
+    build
+elif [ "$1" == "pack" ];then
+    pack
+elif [ "$1" == "install" ];then
+    install
+elif [ "$1" == "uninstall" ];then
+    uninstall
+elif [ "$1" == "cleanapp" ];then
+    cleanapp
+elif [ "$1" == "version" ];then
+    version
+else
+    help
+fi

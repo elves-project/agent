@@ -1,0 +1,15 @@
+{
+    "QWASZXCVDFERTYGH": {
+        "Flag": "false",
+        "Comment": "this is a test!",
+        "App": "apptest",
+        "Func": "helloword",
+        "Param": {
+            "my":"hello toryzen!"
+        },
+        "Timeout": 0,
+        "Proxy": "",
+        "Mode": "P",
+        "Rule": "*/15 * * * * *"
+    }
+}

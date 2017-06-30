@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Elves-Agent Web Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
+  <link href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600"
+        rel="stylesheet">
+  <link href="css/font-awesome.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <link href="css/pages/dashboard.css" rel="stylesheet">
+  <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+  <!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+<body>
+<div class="navbar navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container"> <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span
+            class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span> </a><a class="brand" href="index.html">Elves-Agent Web Dashboard</a>
+      <!--/.nav-collapse -->
+    </div>
+    <!-- /container -->
+  </div>
+  <!-- /navbar-inner -->
+</div>
+<!-- /navbar -->
+<div class="subnavbar">
+  <div class="subnavbar-inner">
+    <div class="container">
+      <ul class="mainnav">
+        <li class="active"><a href="/index.html"><i class="icon-dashboard"></i><span>Dashboard</span> </a> </li>
+        <li><a href="/tasks.html"><i class="icon-list-alt"></i><span>Recent Tasks</span> </a> </li>
+        <li><a href="/errors.html"><i class="icon-warning-sign"></i><span>Recent Errors</span> </a></li>
+        <li><a href="/devtools.html"><i class="icon-wrench"></i><span>Develop Tools</span> </a> </li>
+      </ul>
+    </div>
+    <!-- /container -->
+  </div>
+  <!-- /subnavbar-inner -->
+</div>
+<!-- /subnavbar -->
+<div class="main">
+  <div class="main-inner">
+    <div class="container">
+      <div class="row">
+        <div class="span3">
+          <div class="widget widget-nopad">
+            <div class="widget-header"> <i class="icon-list-alt"></i>
+              <h3> General Info</h3>
+            </div>
+            <!-- /widget-header -->
+            <div class="widget-content">
+              <br/>
+              <div class="general-info-item">
+                <span class="general-title"><b>&nbsp;Agent Mode:</b></span>
+                <span id="agent-mode"></span>
+              </div><br/>
+              <div class="general-info-item">
+                <span class="general-title"><b>&nbsp;Agent Asset:</b></span>
+                <span id="agent-asset"></span>
+              </div><br/>
+              <div class="general-info-item">
+                <span class="general-title"><b>&nbsp;Agent Ip:</b></span>
+                <span id="agent-ip"></span>
+              </div><br/>
+              <div class="general-info-item">
+                <span class="general-title"><b>&nbsp;Agent Uptime:</b></span>
+                <span id="agent-uptime"></span>
+              </div><br/>
+              <div class="general-info-item">
+                <span class="general-title"><b>&nbsp;HB Check Time:</b></span>
+                <span id="agent-heartbeat"></span>
+              </div><br/>
+              <div class="general-info-item">
+                <span class="general-title"><b>&nbsp;Agent Version:</b></span>
+                <span id="agent-version"></span>
+              </div>
+              <br/>
+            </div>
+          </div>
+          <!-- /widget -->
+        </div>
+        <!-- /span3 -->
+
+        <div class="span2">
+          <div class="widget widget-table action-table">
+            <div class="widget-header"> <i class="icon-th-list"></i>
+              <h3>Apps</h3>
+            </div>
+            <!-- /widget-header -->
+            <div class="widget-content">
+              <table class="table table-striped table-bordered">
+                <thead>
+                <tr>
+                  <th> Apps </th>
+                  <th> Ver</th>
+                </tr>
+                </thead>
+                <tbody  id="apps_table"></tbody>
+              </table>
+            </div>
+            <!-- /widget-content -->
+          </div>
+          <!-- /widget -->
+        </div>
+        <!-- /span2 -->
+
+        <div class="span7">
+          <div class="widget widget-table action-table">
+            <div class="widget-header"> <i class="icon-th-list"></i>
+              <h3>Agent Crons</h3>
+            </div>
+            <!-- /widget-header -->
+            <div class="widget-content">
+              <table class="table table-striped table-bordered">
+                <thead>
+                <tr>
+                  <th> Id </th>
+                  <th> App </th>
+                  <th> Func </th>
+                  <th> Mode </th>
+                  <th> Rule </th>
+                  <th> Comment </th>
+                  <th> LastExec </th>
+                </tr>
+                </thead>
+                <tbody  id="crons_table"></tbody>
+              </table>
+            </div>
+            <!-- /widget-content -->
+          </div>
+          <!-- /widget -->
+        </div>
+        <!-- /span2 -->
+<!--
+        <div class="span4">
+          <div class="widget">
+            <div class="widget-header"> <i class="icon-bookmark"></i>
+              <h3>Develop Pannel </h3>
+            </div>
+            <div class="widget-content">
+
+              <div class="control-group">
+                <div class="controls">
+                  <b>App:</b> <input id="dev_app" type="text" class="span1" value="">&nbsp;
+                  <b>Func:</b>  <input id="dev_func" type="text" class="span2" value="">&nbsp;
+                  <b>Type:</b>  <select id="dev_type" class="span1"><option>RT</option></select>&nbsp;
+                  <b>Mode:</b>  <select id="dev_mode" class="span1"><option value="SSnP" selected>SSnP</option><option value="SSP">SSP</option></select>&nbsp;
+                  <b>Timeout:</b>  <input id="dev_timeout" type="text" class="span1" value="">&nbsp;<br/>
+                  <b>Proxy:</b>  <input id="dev_proxy" type="text" class="span1" value="">&nbsp;<br/>
+                  <b>Param:</b>  <input  id="dev_param" type="text" class="span2" value="">&nbsp;
+                  <button type="submit" class="btn btn-primary" style="float:right" onclick="getapiuri()">G</button>
+                </div>
+              </div>
+              <hr/>
+              <div class="control-group">
+                <div class="controls">
+                  <b>Uri:</b> <input  id="dev_uri" type="text" class="span2" value="">
+                  <b>Post:</b> <input  id="dev_post" type="text" class="span3" value="">
+                  <button type="submit" class="btn btn-primary" style="float:right" onclick="runtest()">Run Test [GET]</button>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+        <!-- /span7 -->
+      </div>
+      <!-- /row -->
+    </div>
+    <!-- /container -->
+  </div>
+  <!-- /main-inner -->
+</div>
+<!-- /main -->
+
+<div class="footer">
+  <div class="footer-inner">
+    <div class="container">
+      <div class="row">
+        <div class="span12"> &copy; 2017 <a href="#">Elves-Agent Web Dashboard</a>. </div>
+        <!-- /span12 -->
+      </div>
+      <!-- /row -->
+    </div>
+    <!-- /container -->
+  </div>
+  <!-- /footer-inner -->
+</div>
+<!-- /footer -->
+<!-- Le javascript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="js/jquery-1.7.2.min.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/agent.js"></script>
+
+
+</body>
+</html>
