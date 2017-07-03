@@ -2,11 +2,11 @@ package http
 
 import (
 	"../g"
-	"github.com/gy-games-libs/seelog"
-	"fmt"
 	"encoding/json"
-	"net/http"
+	"fmt"
+	"github.com/gy-games-libs/seelog"
 	"log"
+	"net/http"
 	_ "net/http/pprof"
 )
 
@@ -37,10 +37,10 @@ func RenderDataJson(w http.ResponseWriter, data interface{}) {
 }
 
 func Start() {
-	defer func(){
-		if err:=recover();err!=nil{
-			seelog.Error("[funcs:http Start] ",err)
-			go g.SaveErrorStat("[func:http Start] "+fmt.Sprintf("%s", err))
+	defer func() {
+		if err := recover(); err != nil {
+			seelog.Error("[funcs:http Start] ", err)
+			go g.SaveErrorStat("[func:http Start] " + fmt.Sprintf("%s", err))
 		}
 	}()
 	if !g.Config().Http.Enabled {

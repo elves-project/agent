@@ -1,26 +1,26 @@
 package funcs
 
 import (
-	"time"
-	"unsafe"
-	"encoding/json"
-	"strconv"
-	"sort"
+	"archive/zip"
 	"crypto/md5"
+	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
-	"path/filepath"
-	"os"
 	"io/ioutil"
-	"archive/zip"
 	"net/http"
-	"errors"
+	"os"
+	"path/filepath"
+	"sort"
+	"strconv"
+	"time"
+	"unsafe"
 )
 
-func GetMD5(str string) string{
+func GetMD5(str string) string {
 	md5Ctx := md5.New()
 	md5Ctx.Write([]byte(str))
-	cipherStr:= md5Ctx.Sum(nil)
+	cipherStr := md5Ctx.Sum(nil)
 	return fmt.Sprintf("%x", cipherStr)
 }
 
@@ -32,12 +32,12 @@ func BytesString(b []byte) string {
 	return *(*string)(unsafe.Pointer(&b))
 }
 
-func JsonToString(j string)string{
-	r,_ := json.Marshal(j)
+func JsonToString(j string) string {
+	r, _ := json.Marshal(j)
 	return BytesString(r)
 }
 
-func Sign(uri string , pastr map[string]string ,Authkey string)( string,string){
+func Sign(uri string, pastr map[string]string, Authkey string) (string, string) {
 	keys := make([]string, len(pastr))
 	i := 0
 	for k, _ := range pastr {
@@ -45,23 +45,23 @@ func Sign(uri string , pastr map[string]string ,Authkey string)( string,string){
 		i++
 	}
 	sort.Strings(keys)
-	str :=""
+	str := ""
 	for _, k := range keys {
-		str = str+k+"="+pastr[k]
-		if i !=1 {
-			str = str+"&"
+		str = str + k + "=" + pastr[k]
+		if i != 1 {
+			str = str + "&"
 		}
 		i--
 	}
-	has := md5.Sum([]byte(uri+str+Authkey))
+	has := md5.Sum([]byte(uri + str + Authkey))
 	//seelog.Debug(uri+str+Authkey)
 	md5str := fmt.Sprintf("%x", has)
-	return md5str,str
+	return md5str, str
 
 }
 
-func StrToInt(str string) int{
-	i,_:=strconv.Atoi(str)
+func StrToInt(str string) int {
+	i, _ := strconv.Atoi(str)
 	return i
 }
 
@@ -99,23 +99,23 @@ func Unzip(src, dest string) error {
 	return nil
 }
 
-func Download(url string,fileDir string,fileName string) error {
+func Download(url string, fileDir string, fileName string) error {
 	if err := os.MkdirAll(fileDir, 0700); err != nil {
 		return err
-	}else{
+	} else {
 		res, err := http.Get(url)
-		if res.StatusCode == 200{
+		if res.StatusCode == 200 {
 			if err != nil {
 				return err
 			}
-			f, err := os.Create(fileDir+"/"+fileName)
+			f, err := os.Create(fileDir + "/" + fileName)
 			defer f.Close()
 			if err != nil {
 				return err
 			}
 			io.Copy(f, res.Body)
-		}else{
-			return errors.New("download file "+fileName+" fail StatusCode:"+strconv.Itoa(res.StatusCode))
+		} else {
+			return errors.New("download file " + fileName + " fail StatusCode:" + strconv.Itoa(res.StatusCode))
 		}
 	}
 	return nil

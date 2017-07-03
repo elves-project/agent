@@ -4,7 +4,7 @@ import (
 	"../g"
 )
 
-func ClearApps(){
+func ClearApps() {
 	g.Config().Apps = map[string]string{}
 	g.SaveConfig()
 }

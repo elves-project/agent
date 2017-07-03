@@ -1,19 +1,19 @@
 package main
 
 import (
-	"./g"
-	"./funcs"
 	"./cron"
+	"./funcs"
+	"./g"
 	"./http"
-	"github.com/gy-games-libs/seelog"
 	"flag"
 	"fmt"
+	"github.com/gy-games-libs/seelog"
 	"os"
 )
 
-func main(){
+func main() {
 	defer seelog.Flush()
-	cfg := flag.String("r",g.GetRoot(),"elves-agent root directory")
+	cfg := flag.String("r", g.GetRoot(), "elves-agent root directory")
 	version := flag.Bool("v", false, "show version")
 	clear := flag.Bool("clear", false, "clear this agent's apps")
 	flag.Parse()
@@ -37,11 +37,11 @@ func main(){
 		go cron.HearBeatCron(int64(g.Config().HeartBeat.Interval))
 	}
 
-	if g.Config().Devmode.Enabled{
+	if g.Config().Devmode.Enabled {
 		seelog.Info("elves agent init as dev mode")
 	}
 
-	if g.Config().Http.Enabled || g.Config().Devmode.Enabled{
+	if g.Config().Http.Enabled || g.Config().Devmode.Enabled {
 		go http.Start()
 	}
 

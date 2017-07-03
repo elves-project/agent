@@ -1,70 +1,70 @@
 package g
 
 import (
-	"github.com/gy-games-libs/seelog"
-	"github.com/gy-games-libs/file"
 	"bytes"
+	"encoding/json"
+	"github.com/gy-games-libs/file"
+	"github.com/gy-games-libs/seelog"
+	"io/ioutil"
+	"log"
 	"os"
 	"path/filepath"
 	"strings"
-	"log"
-	"io/ioutil"
 	"sync"
-	"encoding/json"
 )
 
-type AgentCronConfig struct{
-	Comment 		string			`json:"comment"`
-	Enabled 		bool			`json:"enabled"`
+type AgentCronConfig struct {
+	Comment string `json:"comment"`
+	Enabled bool   `json:"enabled"`
 }
 
 type HeartbeatConfig struct {
-	Comment 		string			`json:"comment"`
-	Enabled 		bool			`json:"enabled"`
-	Addr			string			`json:"addr"`
-	Port 	 		int			`json:"port"`
-	Interval 		int			`json:"interval"`
-	Timeout  		int			`json:"timeout"`
+	Comment  string `json:"comment"`
+	Enabled  bool   `json:"enabled"`
+	Addr     string `json:"addr"`
+	Port     int    `json:"port"`
+	Interval int    `json:"interval"`
+	Timeout  int    `json:"timeout"`
 }
 
-type SchedulerConfig struct{
-	Addr 	string			`json:"addr"`
-	Port 	int			`json:"port"`
-	Timeout	int			`json:"timeout"`
+type SchedulerConfig struct {
+	Addr    string `json:"addr"`
+	Port    int    `json:"port"`
+	Timeout int    `json:"timeout"`
 }
 
 type DevmodeConfig struct {
-	Comment 		string			`json:"comment"`
-	Enabled 		bool			`json:"enabled"`
-	Authid			string			`json:"authid"`
-	Authkey 	 	string			`json:"authkey"`
+	Comment string `json:"comment"`
+	Enabled bool   `json:"enabled"`
+	Authid  string `json:"authid"`
+	Authkey string `json:"authkey"`
 }
 
-type GlobalConfig struct{
-	Asset			string			`json:"asset"`
-	Ip 			string			`json:"ip"`
-	Port            	int			`json:"port"`
-	HeartBeat		*HeartbeatConfig	`json:"heartbeat"`
-	Scheduler		*SchedulerConfig	`json:"scheduler"`
-	Agentcron		*AgentCronConfig	`json:"agentcron"`
-	Http			*HttpConfig		`json:"http"`
-	AppsDownloadAddr	string			`json:"appsdownloadaddr"`
-	Apps			map[string]string	`json:"apps"`
-	Devmode			*DevmodeConfig		`json:"devmode"`
+type GlobalConfig struct {
+	Asset            string            `json:"asset"`
+	Ip               string            `json:"ip"`
+	Port             int               `json:"port"`
+	HeartBeat        *HeartbeatConfig  `json:"heartbeat"`
+	Scheduler        *SchedulerConfig  `json:"scheduler"`
+	Agentcron        *AgentCronConfig  `json:"agentcron"`
+	Http             *HttpConfig       `json:"http"`
+	AppsDownloadAddr string            `json:"appsdownloadaddr"`
+	Apps             map[string]string `json:"apps"`
+	Devmode          *DevmodeConfig    `json:"devmode"`
 }
 
 type HttpConfig struct {
-	Comment 		string			`json:"comment"`
-	Enabled 		bool			`json:"enabled"`
-	Listen            	string			`json:"listen"`
+	Comment string `json:"comment"`
+	Enabled bool   `json:"enabled"`
+	Listen  string `json:"listen"`
 }
 
 var (
-	Root 		string
-	ConfigFile 	string
-	config     	*GlobalConfig
-	lock       	= new(sync.RWMutex)
-	savecfglock 	= new(sync.RWMutex)
+	Root        string
+	ConfigFile  string
+	config      *GlobalConfig
+	lock        = new(sync.RWMutex)
+	savecfglock = new(sync.RWMutex)
 )
 
 func Config() *GlobalConfig {
@@ -92,13 +92,13 @@ func ParseConfig(cfg string) {
 		log.Fatalln("use -r to specify elves-agent root directory")
 	}
 
-	if !file.IsExist(cfg+"/conf/"+"cfg.json") {
+	if !file.IsExist(cfg + "/conf/" + "cfg.json") {
 		log.Fatalln("[Fault]config file:", cfg+"/conf/"+"cfg.json", "is not existent. maybe you need `mv cfg.example.json cfg.json`")
 	}
 
 	Root = cfg
 
-	configContent, err := file.ToTrimString(cfg+"/conf/"+"cfg.json")
+	configContent, err := file.ToTrimString(cfg + "/conf/" + "cfg.json")
 	if err != nil {
 		log.Fatalln("[Fault]read config file:", cfg, "fail:", err)
 	}
@@ -114,25 +114,25 @@ func ParseConfig(cfg string) {
 
 	config = &c
 
-	if config.Ip ==""{
-		log.Fatalln(cfg,"[Fault]get local ip addr fail check you config!")
+	if config.Ip == "" {
+		log.Fatalln(cfg, "[Fault]get local ip addr fail check you config!")
 	}
 
 	if config.Asset == "" {
 		config.Asset = config.Ip
 	}
 
-	logger, err := seelog.LoggerFromConfigAsFile(cfg+"/conf/"+"seelog.xml")
+	logger, err := seelog.LoggerFromConfigAsFile(cfg + "/conf/" + "seelog.xml")
 
 	seelog.ReplaceLogger(logger)
 
 }
 
-func SaveConfig()  {
+func SaveConfig() {
 	savecfglock.RLock()
 	defer savecfglock.RUnlock()
-	seelog.Debug("Save Config..",Root+"/conf/"+"cfg.json")
-	r,_ := json.Marshal(Config())
+	seelog.Debug("Save Config..", Root+"/conf/"+"cfg.json")
+	r, _ := json.Marshal(Config())
 	var out bytes.Buffer
 	err := json.Indent(&out, r, "", "\t")
 
@@ -141,9 +141,9 @@ func SaveConfig()  {
 	}
 	if err == nil {
 		//seelog.Debug(out.String())
-		ioutil.WriteFile(Root+"/conf/"+"cfg.json", []byte(out.String()),0644)
+		ioutil.WriteFile(Root+"/conf/"+"cfg.json", []byte(out.String()), 0644)
 		seelog.Debug("Config Save Success!")
-	}else{
-		seelog.Error("save config fail ",err)
+	} else {
+		seelog.Error("save config fail ", err)
 	}
 }
