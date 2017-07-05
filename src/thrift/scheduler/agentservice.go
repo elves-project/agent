@@ -652,7 +652,7 @@ func (p *AgentServiceInstructionInvokeAsyncArgs) Read(iprot thrift.TProtocol) er
 		}
 		switch fieldId {
 		case 1:
-			if err := p.readField1(iprot); err != nil {
+			if err := p.ReadField1(iprot); err != nil {
 				return err
 			}
 		default:
@@ -670,7 +670,7 @@ func (p *AgentServiceInstructionInvokeAsyncArgs) Read(iprot thrift.TProtocol) er
 	return nil
 }
 
-func (p *AgentServiceInstructionInvokeAsyncArgs) readField1(iprot thrift.TProtocol) error {
+func (p *AgentServiceInstructionInvokeAsyncArgs) ReadField1(iprot thrift.TProtocol) error {
 	_, size, err := iprot.ReadListBegin()
 	if err != nil {
 		return thrift.PrependError("error reading list begin: ", err)
