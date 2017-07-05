@@ -6,14 +6,14 @@ package main
 import (
 	"flag"
 	"fmt"
+	"github.com/elves-project/agent/src/thrift/hearbeat"
+	"github.com/gy-games-libs/go-thrift"
 	"math"
 	"net"
 	"net/url"
 	"os"
 	"strconv"
 	"strings"
-	"github.com/elves-project/agent/src/thrift/hearbeat"
-	"github.com/gy-games-libs/go-thrift"
 )
 
 func Usage() {

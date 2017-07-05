@@ -6,6 +6,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"github.com/elves-project/agent/src/thrift/scheduler"
 	"github.com/gy-games-libs/go-thrift"
 	"math"
 	"net"
@@ -13,7 +14,6 @@ import (
 	"os"
 	"strconv"
 	"strings"
-	"../../../thrift/scheduler"
 )
 
 func Usage() {
