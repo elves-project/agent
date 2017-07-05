@@ -2,13 +2,8 @@ language: go
 
 matrix:
   include:
-    - go: 1.7
+    - go: 1.7.x
+    
 
 script:
-  - go get github.com/gy-games-libs/cron
-  - go get github.com/gy-games-libs/file
-  - go get github.com/gy-games-libs/fsnotify
-  - go get github.com/gy-games-libs/seelog
-  - go get github.com/gy-games-libs/go-thrift
-  - go get github.com/gy-games-libs/uuid
   - go build src/agent.go

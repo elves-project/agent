@@ -1,12 +1,12 @@
 package funcs
 
 import (
-	"../g"
-	"../thrift/app"
-	"../thrift/scheduler"
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
+	"github.com/elves-project/agent/src/g"
+	"github.com/elves-project/agent/src/thrift/app"
+	"github.com/elves-project/agent/src/thrift/scheduler"
 	"github.com/gy-games-libs/file"
 	"github.com/gy-games-libs/go-thrift"
 	"github.com/gy-games-libs/seelog"

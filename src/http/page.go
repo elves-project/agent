@@ -1,7 +1,7 @@
 package http
 
 import (
-	"../g"
+	"github.com/elves-project/agent/src/g"
 	"github.com/gy-games-libs/file"
 	"github.com/gy-games-libs/seelog"
 	"net/http"

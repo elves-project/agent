@@ -1,7 +1,7 @@
 package funcs
 
 import (
-	"../g"
+	"github.com/elves-project/agent/src/g"
 )
 
 func ClearApps() {

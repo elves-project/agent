@@ -1,11 +1,11 @@
 package cron
 
 import (
-	"../funcs"
-	"../g"
-	"../thrift/scheduler"
 	"encoding/json"
 	"fmt"
+	"github.com/elves-project/agent/src/funcs"
+	"github.com/elves-project/agent/src/g"
+	"github.com/elves-project/agent/src/thrift/scheduler"
 	"github.com/gy-games-libs/cron"
 	"github.com/gy-games-libs/file"
 	"github.com/gy-games-libs/fsnotify"

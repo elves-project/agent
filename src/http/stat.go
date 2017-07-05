@@ -1,7 +1,7 @@
 package http
 
 import (
-	"../g"
+	"github.com/elves-project/agent/src/g"
 	"net/http"
 )
 

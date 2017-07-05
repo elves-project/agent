@@ -1,8 +1,8 @@
 package funcs
 
 import (
-	"../g"
-	"../thrift/scheduler"
+	"github.com/elves-project/agent/src/g"
+	"github.com/elves-project/agent/src/thrift/scheduler"
 	"github.com/gy-games-libs/go-thrift"
 	"github.com/gy-games-libs/seelog"
 	"strconv"

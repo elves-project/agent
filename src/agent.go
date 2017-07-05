@@ -1,12 +1,12 @@
 package main
 
 import (
-	"./cron"
-	"./funcs"
-	"./g"
-	"./http"
 	"flag"
 	"fmt"
+	"github.com/elves-project/agent/src/cron"
+	"github.com/elves-project/agent/src/funcs"
+	"github.com/elves-project/agent/src/g"
+	"github.com/elves-project/agent/src/http"
 	"github.com/gy-games-libs/seelog"
 	"os"
 )

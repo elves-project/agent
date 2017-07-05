@@ -1,10 +1,10 @@
 package cron
 
 import (
-	"../funcs"
-	"../g"
-	"../thrift/hearbeat"
 	"encoding/json"
+	"github.com/elves-project/agent/src/funcs"
+	"github.com/elves-project/agent/src/g"
+	"github.com/elves-project/agent/src/thrift/hearbeat"
 	"github.com/gy-games-libs/go-thrift"
 	"github.com/gy-games-libs/seelog"
 	"net"

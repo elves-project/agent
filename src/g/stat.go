@@ -1,7 +1,7 @@
 package g
 
 import (
-	"../thrift/scheduler"
+	"github.com/elves-project/agent/src/thrift/scheduler"
 	"sync"
 	"time"
 )

@@ -1,11 +1,11 @@
 package http
 
 import (
-	"../funcs"
-	"../g"
-	"../thrift/scheduler"
 	"crypto/md5"
 	"fmt"
+	"github.com/elves-project/agent/src/funcs"
+	"github.com/elves-project/agent/src/g"
+	"github.com/elves-project/agent/src/thrift/scheduler"
 	"github.com/gy-games-libs/seelog"
 	"github.com/gy-games-libs/uuid"
 	"net/http"

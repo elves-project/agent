@@ -1,9 +1,9 @@
 package http
 
 import (
-	"../g"
 	"encoding/json"
 	"fmt"
+	"github.com/elves-project/agent/src/g"
 	"github.com/gy-games-libs/seelog"
 	"log"
 	"net/http"
