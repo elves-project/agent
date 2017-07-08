@@ -1,5 +1,5 @@
 package g
 
 const (
-	VERSION = "go-0.3.2"
+	VERSION = "go-0.4.0"
 )
