@@ -1,7 +1,7 @@
 package g
 
 import (
-	"github.com/elves-project/agent/src/thrift/scheduler"
+	//"github.com/elves-project/agent/src/thrift/scheduler"
 	"sync"
 	"time"
 )
@@ -70,7 +70,7 @@ func UpdateHbTime() {
 	stat.Hbtime = tm.Format("2006/01/02 15:04:05")
 }
 
-func SaveTaskStat(ins scheduler.Instruct, flag int32, costtime int32) {
+func SaveTaskStat(ins SchedulerInstruct, flag int32, costtime int32) {
 	tlock.Lock()
 	defer tlock.Unlock()
 	tptask := tstat

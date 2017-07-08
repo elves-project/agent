@@ -1,9 +1,10 @@
 package funcs
 
 import (
+	"fmt"
 	"github.com/elves-project/agent/src/g"
+	"github.com/elves-project/agent/src/thrift/apache-thrift"
 	"github.com/elves-project/agent/src/thrift/scheduler"
-	"github.com/gy-games-libs/go-thrift"
 	"github.com/gy-games-libs/seelog"
 	"strconv"
 )
@@ -34,13 +35,21 @@ func (this *AgentServiceServiceImpl) InstructionInvokeSync(ins *scheduler.Instru
 }
 
 func (this *AgentServiceServiceImpl) AliveCheck() (r string, err error) {
+	seelog.Info("CheckAlive Begin..")
 	r = "success"
 	return r, nil
 }
 
-func ServerRun() {
-
-	transport, err := thrift.NewTServerSocket("0.0.0.0:" + strconv.Itoa(g.Config().Port))
+func ServerRun(authips []string) {
+	defer func() {
+		if err := recover(); err != nil {
+			seelog.Error("[funcs:ServerRun] ", err)
+			go g.SaveErrorStat("[func:ServerRun] " + fmt.Sprintf("%s", err))
+		}
+	}()
+	var transport thrift.TServerTransport
+	var err error
+	transport, err = thrift.NewTServerSocket("0.0.0.0:" + strconv.Itoa(g.Config().Port))
 	if err != nil {
 		seelog.Error("[func:ServerRun] ", err)
 		go g.SaveErrorStat("[func:ServerRun] " + err.Error())
@@ -50,13 +59,11 @@ func ServerRun() {
 	if transportFactory == nil {
 		seelog.Error("[func:ServerRun] ", "Failed to create new TransportFactory")
 		go g.SaveErrorStat("[func:ServerRun] " + "Failed to create new TransportFactory")
-		//return nil
 	}
 	protocolFactory := thrift.NewTBinaryProtocolFactoryDefault()
 	hander := &AgentServiceServiceImpl{}
 	processor := scheduler.NewAgentServiceProcessor(hander)
 	server := thrift.NewTSimpleServer4(processor, transport, transportFactory, protocolFactory)
 	seelog.Info("elves agent service listening:" + strconv.Itoa(g.Config().Port))
-	server.Serve()
-
+	server.Serve(authips)
 }

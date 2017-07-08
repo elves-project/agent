@@ -49,5 +49,5 @@ func main() {
 		go cron.WatchCron()
 	}
 
-	funcs.ServerRun()
+	funcs.ServerRun(g.Config().AuthIps)
 }

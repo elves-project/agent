@@ -6,7 +6,7 @@ package app
 import (
 	"bytes"
 	"fmt"
-	"github.com/gy-games-libs/go-thrift"
+	"github.com/elves-project/agent/src/thrift/apache-thrift"
 )
 
 // (needed to ensure safety because of naive import list construction.)

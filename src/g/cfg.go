@@ -44,6 +44,7 @@ type GlobalConfig struct {
 	Asset            string            `json:"asset"`
 	Ip               string            `json:"ip"`
 	Port             int               `json:"port"`
+	AuthIps          []string          `json:"authips"`
 	HeartBeat        *HeartbeatConfig  `json:"heartbeat"`
 	Scheduler        *SchedulerConfig  `json:"scheduler"`
 	Agentcron        *AgentCronConfig  `json:"agentcron"`

@@ -6,8 +6,8 @@ package main
 import (
 	"flag"
 	"fmt"
+	"github.com/elves-project/agent/src/thrift/apache-thrift"
 	"github.com/elves-project/agent/src/thrift/app"
-	"github.com/gy-games-libs/go-thrift"
 	"math"
 	"net"
 	"net/url"

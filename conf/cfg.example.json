@@ -2,6 +2,7 @@
         "asset": "localhost",
         "ip": "127.0.0.1",
         "port": 11101,
+        "authips": [],
         "heartbeat": {
                 "comment": "if this disabled,agent will not install app automatically",
                 "enabled": true,

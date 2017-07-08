@@ -5,10 +5,10 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/elves-project/agent/src/g"
+	"github.com/elves-project/agent/src/thrift/apache-thrift"
 	"github.com/elves-project/agent/src/thrift/app"
 	"github.com/elves-project/agent/src/thrift/scheduler"
 	"github.com/gy-games-libs/file"
-	"github.com/gy-games-libs/go-thrift"
 	"github.com/gy-games-libs/seelog"
 	"net"
 	"os/exec"
@@ -236,6 +236,6 @@ func Appexec(ins scheduler.Instruct) (int32, string, int32) {
 	endTime := CurrentTimeMillis()
 	seelog.Info("App(Id:" + ins.ID + ",Mode:" + ins.Mode + ",Type:" + ins.Type + ",App:" + ins.App + ",Func:" + ins.Func + ") Exec Finsh...")
 	costtime := int32(endTime - startTime)
-	go g.SaveTaskStat(ins, intflag, costtime)
+	go g.SaveTaskStat(g.SchedulerInstruct(ins), intflag, costtime)
 	return intflag, ret, costtime
 }
