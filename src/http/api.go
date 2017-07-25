@@ -110,6 +110,7 @@ func configApiRoutes() {
 			ins.ID = fmt.Sprintf("%x", md5.Sum([]byte(uuid.Rand().Hex())))[0:16]
 			ins.IP = g.Config().Ip
 			ins.Type = "rt"
+			ins.Mode = "p"
 			ins.App = r.Form["app"][0]
 			ins.Func = r.Form["func"][0]
 			f, r, c := funcs.Appexec(ins)
