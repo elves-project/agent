@@ -52,31 +52,36 @@
         <div class="span12">
           <div class="widget">
             <div class="widget-header"> <i class="icon-bookmark"></i>
-              <h3>Develop Pannel </h3>
+              <h3>Develop Pannel (RT Method)</h3>
             </div>
             <div class="widget-content">
 
               <div class="control-group">
                 <div class="controls">
                   <b>App:</b> <input id="dev_app" type="text" class="span1" value="">&nbsp;
-                  <b>Func:</b>  <input id="dev_func" type="text" class="span1" value="">&nbsp;
-                  <b>Type:</b>  <select id="dev_type" class="span1"><option>RT</option></select>&nbsp;
-                  <!--<b>Mode:</b>  <select id="dev_mode" class="span1"><option value="" selected>NP</option></select>&nbsp;-->
+                  <b>Func:</b>  <input id="dev_func" type="text" class="span2" value="">&nbsp;
+                  <!--<b>Type:</b>  <select id="dev_type" class="span1"><option>RT</option></select>&nbsp;
+                  <b>Mode:</b>  <select id="dev_mode" class="span1"><option value="" selected>NP</option></select>&nbsp;-->
                   <b>Timeout:</b>  <input id="dev_timeout" type="text" class="span1" value="">&nbsp;
-                  <b>Proxy:</b>  <input id="dev_proxy" type="text" class="span2" value="">&nbsp;
-                  <b>Param:</b>  <input  id="dev_param" type="text" class="span3" value="">&nbsp;
+                  <b>Proxy:</b>  <input id="dev_proxy" type="text" class="span1" value="">&nbsp;
+                  <b>Param:</b>  <input  id="dev_param" type="text" class="span4" value="">&nbsp;
                   <button type="submit" class="btn btn-primary" style="float:right" onclick="getapiuri()">Generate</button>
+
                 </div>
               </div>
               <hr/>
               <div class="control-group">
                 <div class="controls">
-                  <b>Uri:</b> <input  id="dev_uri" type="text" class="span4" value="">
-                  <b>Post:</b> <input  id="dev_post" type="text" class="span5" value="">
-                  <button type="submit" class="btn btn-primary" style="float:right" onclick="runtest()">Run Test [GET Method]</button>
+                  <b>Uri:</b> <input  id="dev_uri" type="text" class="span3" value="">
+                  <b>Request:</b> <input  id="dev_post" type="text" class="span6" value="">
+                  <button  name="Generate and Run Test" type="submit" class="btn btn-default" style="float:right" onclick="gandr()">G & R</button>
+                  <button type="submit" class="btn btn-primary" style="float:right;margin-right:10px;" onclick="runtest()">Run Test</button>
                 </div>
               </div>
-
+              <hr/>
+              <b>Result:</b><br/>
+              <textarea class="rst" style="width:98%;height:180px;"></textarea>
+              <button type="submit" class="btn btn-default" style="float:right" onclick="runtestnew()">Open In New Windows</button>
             </div>
 
           </div>

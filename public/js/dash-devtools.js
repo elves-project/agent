@@ -37,9 +37,40 @@ function getapiuri(){
     }, "json");
 }
 
+function gandr(){
+    if($("#dev_app").val()=="" || $("#dev_func").val()=="" ){
+        alert("param error!!");
+        return;
+    }
+    $.get("/api/gettesturl?app="+$("#dev_app").val()+"&func="+$("#dev_func").val()+"&param="+$("#dev_param").val()+"&proxy="+$("#dev_proxy").val()+"&timeout="+$("#dev_timeout").val(), function (data) {
+        if (data.msg == "success") {
+            if(data.data.status=="true"){
+                write_cookie("dev_app",$("#dev_app").val());
+                write_cookie("dev_func",$("#dev_func").val());
+                write_cookie("dev_proxy",$("#dev_proxy").val());
+                write_cookie("dev_timeout",$("#dev_timeout").val());
+                write_cookie("dev_param",$("#dev_param").val());
+                $("#dev_uri").val(window.location.protocol+"//"+window.location.host+"/"+"api/v2/rt/exec");
+                $("#dev_post").val(data.data.uri);
+                $.get($("#dev_uri").val()+"?"+$("#dev_post").val(), function(result){
+                    //console.log(result);
+                    $(".rst").html(JSON.stringify(result, null, 4));
+                });
+            }else{
+                alert("Only Dev Mode Can Use This Service.")
+            }
+        }
+    }, "json");
+}
+
 function runtest(){
-  //alert("Run Test Not Finish..")
-  window.open($("#dev_uri").val()+"?"+$("#dev_post").val());
+  $.get($("#dev_uri").val()+"?"+$("#dev_post").val(), function(result){
+      $(".rst").html(JSON.stringify(result, null, 4));
+  });
+}
+
+function runtestnew(){
+    window.open($("#dev_uri").val()+"?"+$("#dev_post").val());
 }
 
 function read_cookie(key){
