@@ -49,12 +49,18 @@ func sendToHeartBeat() {
 			ai.Version = g.VERSION
 			Apps, _ := json.Marshal(cfg.Apps)
 			ai.Apps = funcs.BytesString(Apps)
-			jsrets, hberr := client.HeartbeatPackage(ai)
-			if hberr == nil {
+			jsrets, err := client.HeartbeatPackage(ai)
+			if err != nil {
+				seelog.Error("[func:SendToHeartBeat] ", err)
+				go g.SaveErrorStat("[func:SendToHeartBeat] " + err.Error())
+			} else {
 				var rdat HeartBeatMessage
 				seelog.Debug("[func:SendToHeartBeat] HeartBeat Return App ", jsrets)
 				json.Unmarshal([]byte(jsrets), &rdat)
-				if err := json.Unmarshal([]byte(jsrets), &rdat); err == nil {
+				if err := json.Unmarshal([]byte(jsrets), &rdat); err != nil {
+					seelog.Error("[func:SendToHeartBeat] ", err)
+					go g.SaveErrorStat("[func:SendToHeartBeat] " + err.Error())
+				} else {
 					for b, v := range rdat.Data {
 						if _, ok := cfg.Apps[b]; ok {
 							if v != cfg.Apps[b] {
@@ -73,13 +79,7 @@ func sendToHeartBeat() {
 							g.SaveConfig()
 						}
 					}
-				} else {
-					seelog.Error("[func:SendToHeartBeat] ", err)
-					go g.SaveErrorStat("[func:SendToHeartBeat] " + err.Error())
 				}
-			} else {
-				seelog.Error("[func:SendToHeartBeat] ", err)
-				go g.SaveErrorStat("[func:SendToHeartBeat] " + err.Error())
 			}
 		}
 	}
