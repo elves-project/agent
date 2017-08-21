@@ -77,13 +77,13 @@ function pack() {
 }
 
 function install(){
-    echo "$WORKSPACE/control start #$app" >> /etc/rc.local
-    echo "$app install... (you can check /etc/rc.local)"
+    echo "$WORKSPACE/control start #$app" >> /etc/rc.d/rc.local
+    echo "$app install... (you can check /etc/rc.d/rc.local)"
 }
 
 function uninstall(){
-    sed -i '/'"$app"'/d' /etc/rc.local
-    echo "$app uninstall... (you can check /etc/rc.local)"
+    sed -i '/'"$app"'/d' /etc/rc.d/rc.local
+    echo "$app uninstall... (you can check /etc/rc.d/rc.local)"
 }
 
 function cleanapp() {
