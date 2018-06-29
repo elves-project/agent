@@ -104,16 +104,18 @@ func Download(url string, fileDir string, fileName string) error {
 		return err
 	} else {
 		res, err := http.Get(url)
+		if err != nil {
+			return err
+		}
 		if res.StatusCode == 200 {
-			if err != nil {
-				return err
-			}
 			f, err := os.Create(fileDir + "/" + fileName)
 			defer f.Close()
 			if err != nil {
 				return err
 			}
-			io.Copy(f, res.Body)
+			if _, err := io.Copy(f, res.Body); err != nil {
+				return err
+			}
 		} else {
 			return errors.New("download file " + fileName + " fail StatusCode:" + strconv.Itoa(res.StatusCode))
 		}
